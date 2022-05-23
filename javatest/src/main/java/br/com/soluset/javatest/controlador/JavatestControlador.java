@@ -29,31 +29,31 @@ public class JavatestControlador {
 		return usuarios;
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/perfil/{id}")
 	public String buscar(@PathVariable Long id){
 		Optional<Account> resultado = accountRepository.findById(id);
 		Account usuario = resultado.get();
 		return usuario.getName() + "," + usuario.getUser() + "," + usuario.getEmail();
 	}
 	
-	@PostMapping
-	public Account inserir (@RequestBody Account usuarios) {
-		Account usuarioInserido = accountRepository.save(usuarios);
+	@PostMapping("/add")
+	public Account inserir (@RequestBody Account account) {
+		Account usuarioInserido = accountRepository.save(account);
 		return usuarioInserido;
 	}
 	
-	@DeleteMapping("/{id}")	
+	@PutMapping("/edit")
+	public Account editar(@RequestBody Account usuario) {
+		Account usuarioEditado = accountRepository.save(usuario);
+		return usuarioEditado;
+	}
+		
+	@DeleteMapping("/delete/{id}")	
 	public Account excluir (@PathVariable Long id){
 		Optional<Account> account = accountRepository.findById(id);
 		accountRepository.delete(account.get());
 		Account usuarioRetorno = account.get();
 		return usuarioRetorno; 
-	}
-	
-	@PutMapping
-	public Account editar(@RequestBody Account usuario) {
-		Account usuarioEditado = accountRepository.save(usuario);
-		return usuarioEditado;
 	}
 	
 }
